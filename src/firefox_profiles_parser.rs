@@ -28,6 +28,7 @@ pub fn find_firefox_profiles(
     let profiles_ini_path = firefox_profiles_dir.join("profiles.ini");
     debug!("profiles_ini_path: {:?}", profiles_ini_path);
 
+
     // When user has installed Firefox, but never ran it, then the profiles.ini does not yet exist
     if !profiles_ini_path.exists() {
         info!(
@@ -188,10 +189,11 @@ pub fn find_firefox_profiles(
 
         if !containers.is_empty() {
             for container in containers {
+                let container_profile_name = profile_name.to_string() + " " + container.name.as_str();
                 browser_profiles.push(InstalledBrowserProfile {
                     profile_cli_arg_value: profile_name.to_string(),
                     profile_cli_container_name: Some(container.id.to_string()),
-                    profile_name: profile_name.to_string() + " " + container.name.as_str(),
+                    profile_name: container_profile_name,
                     profile_icon: None,
                     profile_restricted_url_patterns: vec![],
                 })
